@@ -126,3 +126,32 @@ def test_merge_raises_on_custom_type(primitives):
 
     with pytest.raises(TypeError):
         assert map_merge._merge(CustomType(), primitives)
+
+
+def test_merge_raises_on_empty_sequence():
+    """
+    Assert that :func:`~map_merge.merge` raises a :class:`ValueError` when given an empty sequence
+    of maps.
+    """
+    with pytest.raises(ValueError):
+        map_merge.merge([])
+
+
+def test_merge_mutates_first_map_when_toggled():
+    """
+    Assert that :func:`~map_merge.merge` returns a mutated instance of the first map it is given
+    when configured to do so.
+    """
+    one = dict(x=1, y=2)
+    two = dict(x=3, z=4)
+    assert map_merge.merge([one, two], mutate=True) is one
+
+
+def test_merge_returns_new_mapping_when_toggled():
+    """
+    Assert that :func:`~map_merge.merge` returns a new mapping instance containing the merged
+    values when it is configured to do so.
+    """
+    one = dict(x=1, y=2)
+    two = dict(x=3, z=4)
+    assert map_merge.merge([one, two], mutate=False) is not one
