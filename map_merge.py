@@ -49,10 +49,6 @@ def _merge(lhs, rhs):
         lhs.extend(rhs) if isinstance(rhs, collections.Sequence) else lhs.append(rhs)
         return lhs
 
-    if isinstance(lhs, collections.MutableSet):
-        lhs.update(rhs)
-        return lhs
-
     if isinstance(lhs, collections.Set):
         return lhs.union(rhs)
 
