@@ -1,6 +1,11 @@
 # Map Merge
 
-Merge mappings instance in Python, get it?
+[![Build Status](https://travis-ci.org/ahawker/map_merge.svg?branch=master)](https://travis-ci.org/ahawker/map_merge)
+[![Test Coverage](https://codeclimate.com/github/ahawker/map_merge/badges/coverage.svg)](https://codeclimate.com/github/ahawker/map_merge/coverage)
+[![Code Climate](https://codeclimate.com/github/ahawker/map_merge/badges/gpa.svg)](https://codeclimate.com/github/ahawker/map_merge)
+[![Issue Count](https://codeclimate.com/github/ahawker/map_merge/badges/issue_count.svg)](https://codeclimate.com/github/ahawker/map_merge)
+
+Merge mappings instance in Python.
 
 ### Status
 
