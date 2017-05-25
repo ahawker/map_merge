@@ -95,3 +95,34 @@ def test_merge_set_updates_when_given_sequence(mutable_sequences_of_multi_length
     initial = {42}
     expected = initial.union(mutable_sequences_of_multi_length_primitives)
     assert map_merge._merge(initial, mutable_sequences_of_multi_length_primitives) == expected
+
+
+def test_merge_mappings_overwrites_existing_value(primitives):
+    """
+    Assert that :func:`~map_merge._merge` overwrites the original value when merging mappings
+    that contain matching keys.
+    """
+    initial = dict(answer=42)
+    expected = dict(answer=primitives)
+    assert map_merge._merge(initial, expected) == expected
+
+
+def test_merge_mappings_includes_exclusive_keys():
+    """
+    Assert that :func:`~map_merge._merge` includes keys that are exclusive to each mapping.
+    """
+    x = dict(name="foobar")
+    y = dict(age=24)
+    assert map_merge._merge(x, y) == dict(name="foobar", age=24)
+
+
+def test_merge_raises_on_custom_type(primitives):
+    """
+    Assert that :func:`~map_merge._merge` raises a :class:`TypeError` when given two types that it
+    cannot merge.
+    """
+    class CustomType:
+        pass
+
+    with pytest.raises(TypeError):
+        assert map_merge._merge(CustomType(), primitives)
