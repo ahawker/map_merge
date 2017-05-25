@@ -1,0 +1,10 @@
+# map_merge/requirements/test.txt
+# 
+# Requirements for executing the test suite.
+
+-r base.txt
+
+pytest
+pytest-cov
+pytest-mock
+pytest-pep8

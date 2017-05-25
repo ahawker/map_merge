@@ -1,0 +1,6 @@
+# map_merge/requirements/base.txt
+#
+# Requirements for using the package.
+
+bumpversion
+six
