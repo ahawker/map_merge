@@ -56,76 +56,76 @@ def mutable_set_of_primitives(primitives):
 
 def test_merge_primitives_overwrite_existing_value(primitives):
     """
-    Assert that :func:`~map_merge._merge` overwrites the original value when merging primitives.
+    Assert that :func:`~map_merge.merge_objects` overwrites the original value when merging primitives.
     """
-    assert map_merge._merge(42, primitives) == primitives
+    assert map_merge.merge_objects(42, primitives) == primitives
 
 
 def test_merge_mutable_sequence_appends_when_non_sequence(mutable_sequences_of_primitives):
     """
-    Assert that :func:`~map_merge._merge` appends to the original sequence when merging primitives.
+    Assert that :func:`~map_merge.merge_objects` appends to the original sequence when merging primitives.
     """
     initial = [42]
     expected = initial + mutable_sequences_of_primitives
-    assert map_merge._merge(initial, mutable_sequences_of_primitives) == expected
+    assert map_merge.merge_objects(initial, mutable_sequences_of_primitives) == expected
 
 
 def test_merge_mutable_sequence_appends_when_sequence(mutable_sequences_of_multi_length_primitives):
     """
-    Assert that :func:`~map_merge._merge` extends the original sequence when merging two sequences.
+    Assert that :func:`~map_merge.merge_objects` extends the original sequence when merging two sequences.
     """
     initial = [42]
     expected = initial + mutable_sequences_of_multi_length_primitives
-    assert map_merge._merge(initial, mutable_sequences_of_multi_length_primitives) == expected
+    assert map_merge.merge_objects(initial, mutable_sequences_of_multi_length_primitives) == expected
 
 
 def test_merge_set_updates_when_given_primitives(mutable_set_of_primitives):
     """
-    Assert that :func:`~map_merge._merge` updates the original mutable set when merging primitives.
+    Assert that :func:`~map_merge.merge_objects` updates the original mutable set when merging primitives.
     """
     initial = {42}
     expected = initial.union(mutable_set_of_primitives)
-    assert map_merge._merge(initial, mutable_set_of_primitives) == expected
+    assert map_merge.merge_objects(initial, mutable_set_of_primitives) == expected
 
 
 def test_merge_set_updates_when_given_sequence(mutable_sequences_of_multi_length_primitives):
     """
-    Assert that :func:`~map_merge._merge` updates the original mutable set when merging sequences.
+    Assert that :func:`~map_merge.merge_objects` updates the original mutable set when merging sequences.
     """
     initial = {42}
     expected = initial.union(mutable_sequences_of_multi_length_primitives)
-    assert map_merge._merge(initial, mutable_sequences_of_multi_length_primitives) == expected
+    assert map_merge.merge_objects(initial, mutable_sequences_of_multi_length_primitives) == expected
 
 
 def test_merge_mappings_overwrites_existing_value(primitives):
     """
-    Assert that :func:`~map_merge._merge` overwrites the original value when merging mappings
+    Assert that :func:`~map_merge.merge_objects` overwrites the original value when merging mappings
     that contain matching keys.
     """
     initial = dict(answer=42)
     expected = dict(answer=primitives)
-    assert map_merge._merge(initial, expected) == expected
+    assert map_merge.merge_objects(initial, expected) == expected
 
 
 def test_merge_mappings_includes_exclusive_keys():
     """
-    Assert that :func:`~map_merge._merge` includes keys that are exclusive to each mapping.
+    Assert that :func:`~map_merge.merge_objects` includes keys that are exclusive to each mapping.
     """
     x = dict(name="foobar")
     y = dict(age=24)
-    assert map_merge._merge(x, y) == dict(name="foobar", age=24)
+    assert map_merge.merge_objects(x, y) == dict(name="foobar", age=24)
 
 
 def test_merge_raises_on_custom_type(primitives):
     """
-    Assert that :func:`~map_merge._merge` raises a :class:`TypeError` when given two types that it
+    Assert that :func:`~map_merge.merge_objects` raises a :class:`TypeError` when given two types that it
     cannot merge.
     """
     class CustomType:
         pass
 
     with pytest.raises(TypeError):
-        assert map_merge._merge(CustomType(), primitives)
+        assert map_merge.merge_objects(CustomType(), primitives)
 
 
 def test_merge_raises_on_empty_sequence():

@@ -10,7 +10,7 @@ import collections
 import six
 
 
-__all__ = ['merge']
+__all__ = ['merge', 'merge_objects']
 
 
 def merge(maps, mutate=True):
@@ -27,12 +27,12 @@ def merge(maps, mutate=True):
     merged = maps.pop(0) if mutate else {}
 
     for map in maps:
-        merged = _merge(merged, map)
+        merged = merge_objects(merged, map)
 
     return merged
 
 
-def _merge(lhs, rhs):
+def merge_objects(lhs, rhs):
     """
     Merge two objects together, if possible, with the "right hand side" taking precedence on conflicts.
 
@@ -54,7 +54,7 @@ def _merge(lhs, rhs):
 
     if isinstance(lhs, collections.MutableMapping) and isinstance(rhs, collections.MutableMapping):
         for key in rhs:
-            lhs[key] = _merge(lhs.get(key), rhs[key])
+            lhs[key] = merge_objects(lhs.get(key), rhs[key])
         return lhs
 
     raise TypeError('Cannot merge type {} into type {}'.format(rhs.__class__.__name__, lhs.__class__.__name__))
