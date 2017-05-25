@@ -45,6 +45,15 @@ def mutable_sequences_of_multi_length_primitives(primitives):
     return [primitives] * random.randint(1, 10)
 
 
+@pytest.fixture(scope='module')
+def mutable_set_of_primitives(primitives):
+    """
+    Fixture that yields back :class:`~collections.MutableSet` instances that contain
+    a single primitive value.
+    """
+    return {primitives}
+
+
 def test_merge_primitives_overwrite_existing_value(primitives):
     """
     Assert that :func:`~map_merge._merge` overwrites the original value when merging primitives.
@@ -67,4 +76,22 @@ def test_merge_mutable_sequence_appends_when_sequence(mutable_sequences_of_multi
     """
     initial = [42]
     expected = initial + mutable_sequences_of_multi_length_primitives
+    assert map_merge._merge(initial, mutable_sequences_of_multi_length_primitives) == expected
+
+
+def test_merge_set_updates_when_given_primitives(mutable_set_of_primitives):
+    """
+    Assert that :func:`~map_merge._merge` updates the original mutable set when merging primitives.
+    """
+    initial = {42}
+    expected = initial.union(mutable_set_of_primitives)
+    assert map_merge._merge(initial, mutable_set_of_primitives) == expected
+
+
+def test_merge_set_updates_when_given_sequence(mutable_sequences_of_multi_length_primitives):
+    """
+    Assert that :func:`~map_merge._merge` updates the original mutable set when merging sequences.
+    """
+    initial = {42}
+    expected = initial.union(mutable_sequences_of_multi_length_primitives)
     assert map_merge._merge(initial, mutable_sequences_of_multi_length_primitives) == expected
